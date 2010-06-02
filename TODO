@@ -1,0 +1,80 @@
+TODO
+ - test http://www.box.net/dav/ with rw-mode patch
+ - check wdfs for correct call by value/by ref usage
+ - fuse 2.6 supports posix locks with kernel 2.6.18+
+   hence implement lock and unlock methods
+ - add old i18n patch or wait for a fuse i18n patch
+
+
+TESTS
+ - fuse-cvs/fuse/test/test.c
+ - Bonnie++ and iozone
+
+
+FEATURE REQUESTS
+ - D.Roche@lectra.com:
+   one question however, i have not seen anything about it on the doc:
+   is it possible to use wdfs through a proxy?
+
+ - Rolf.Niepraschk@gmx.de
+   Konfigurationsdatei gut, die die Optionen "-p", "-u" (und ggf. weitere) 
+   beinhaltet, Code von http://dav.sourceforge.net/ übernehmen
+
+ - joseph.dunn@colorado.edu
+>>> > I did run into another problem, specifically unison tries to change
+>>> > the permissions on the file.  I've disabled most of this in unison
+>>> > (since I dont honestly care about the file permissions), but it
+>>> > would be nice if wdfs could handle them a little more gracefully.  I
+>>> > realize WebDAV doesnt give you a whole lot of flexibility as far as
+>>> > this goes, but it does provide an executable property.  If I try to
+>>> > do a chmod to 0777 or 0666 (or maybe 0700 or 0600) wdfs could set
+>>> > the executable flag correctly. 
+>
+>> 
+>> You are right, wdfs simply uses 0666 for files and 0777 for
+>> directories, because it doesn't implement a chmod() method. I thought
+>> it might be a good solution to let the webdav server handle the access
+>> rights and not the client...
+
+Well, I agree that the access control must be handled by the server in
+the end, but since you are presenting the user with what appears to be
+a filesystem you're in a special position.  For example, if I copy an
+executable into a webdav share that I have mounted using wdfs then it
+would be extremely useful if it didn't lose the executable setting.  I
+think this has to be done on the client since the server has no way of
+knowing if a specific file should be executable.  It's more of a
+property of the file, not access control on the file.  What I was
+suggesting above was just making it a little more flexiable by just
+allowing the user to change the executable bits.  Access control would
+still be done by the server, but a property of the file would not be
+lost.
+
+int wdfs_chmod(const char *localpath, mode_t mode)
+{
+	if (debug_mode == true)
+		print_debug_infos(__func__, localpath);
+
+	char modes[4];
+	/* convert from octal */
+	modes[0] = (mode & (0x007 << 0)) >> 0;
+	modes[1] = (mode & (0x007 << 3)) >> 3;
+	modes[2] = (mode & (0x007 << 6)) >> 6;
+	modes[3] = (mode & (0x007 << 9)) >> 9;
+
+	/* check that the request is of the form: 0XXX */
+	if ((modes[0] & 0x6) != 0x6 ||
+	     modes[0] != modes[1] ||
+	     modes[0] != modes[2] ||
+	     modes[3] != 0)
+		/* return -EINVAL;  Bitch but works */
+		printf("ignoring bad mode.\n");
+
+	/* set the executable property according to the chmod */
+	if (modes[0] & 0x1)
+		printf("turn on executable property: %s\n", localpath);
+	else
+		printf("turn off executable property: %s\n", localpath);
+
+	return 0;
+}
+

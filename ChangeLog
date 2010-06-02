@@ -1,0 +1,344 @@
+2007-04-17  noedler
+
+	wdfs, 1.4.2
+
+2007-04-17  noedler
+
+	- fixed a stupid bug that avoids mounting the root of a server
+	- documented the optional port for mounting a webdav server
+	- improved attribute caching for some special cases
+
+2007-02-05  noedler
+
+	- wdfs, 1.4.1
+	- updated README
+	- added redirect handling for rename() and unlink(). thanks joseph!
+
+2007-01-25  noedler
+
+	compile fix for mac os x: define strndup() for apple computers
+
+2007-01-24  noedler
+
+	fixed mounting a webdav share that redirects (e.g.) from '/foo' to '/foo/'. thanks to joseph dunn for the patch.
+
+2007-01-19  noedler
+
+	wdfs, 1.4.0
+
+2007-01-14  noedler
+
+	enable http redirect support by default and add option "no_redirect" to disable it
+
+2007-01-14  noedler
+
+	coding style...
+
+2007-01-13  noedler
+
+	- updated copyright to 2007
+	- added dummy impl of wdfs_init()
+	- updated README with an example how to mount wdfs thru fstab
+
+2007-01-13  noedler
+
+	updated README file
+
+2006-11-13  noedler
+
+	added a dummy implementation for statfs()
+
+2006-11-09  noedler
+
+	fixed a bug in the assert statements, thanks sven bachmann for pointing it out!
+
+2006-10-27  noedler
+
+	fixed creating the ChangeLog
+
+2006-10-27  noedler
+
+	Initial commit for the public SVN
+
+2006-10-17  jens m. noedler  <noedler@web.de>
+
+	- introduced unify_path() which does the escaping/unescaping
+	  the remotepath in one place
+	- added checks for the return value of remove_ending_slash()
+	- new: remotepath_basedir may contain special chars
+	- some random coding style improvements
+
+2006-10-17  jens m. noedler  <noedler@web.de>
+
+	improvement: return -EPERM instead of -ENOENT if deleting fails
+	with "403 Forbidden". patch from joseph.dunn@colorado.edu
+
+2006-10-16  jens m. noedler  <noedler@web.de>
+
+	just some random coding style improvements
+
+2006-10-14  jens m. noedler  <noedler@web.de>
+
+	- fixed parsing of "-o accept_sslcert" parameter
+	- added check of "-o locking_timeout" parameter
+
+2006-10-14  jens m. noedler  <noedler@web.de>
+
+	converted most printf() to fprintf(stderr, ...)
+
+2006-10-14  jens m. noedler  <noedler@web.de>
+
+	also allow to enter authentication information (username and password)
+	via the terminal, based on a patch from joseph.dunn@colorado.edu. thanks!
+
+2006-10-13  jens m. noedler  <noedler@web.de>
+
+	- new command line parsing using the fuse option functions
+	  thanks to yuri vasilevski for the patch!
+	- wdfs require due to this change fuse 2.5 or later
+
+2006-08-22  jens m. noedler  <noedler@web.de>
+
+	- replaced "DT_DIR << 12" with "S_IFDIR | 0777" for "." and ".." dentries
+	- removed useless includes of time.h
+
+2006-08-21  jens m. noedler  <noedler@web.de>
+
+	bugfix: set . and .. to type DT_DIR
+	thanks for the patch from mathieu boespflug
+
+2006-08-01  jens m. noedler  <noedler@web.de>
+
+	wdfs, 1.3.1
+
+2006-08-01  jens m. noedler  <noedler@web.de>
+
+	added these statement to permit debian to add wdfs to it's archive
+
+	 *  This program is released under the GPL with the additional exemption
+	 *  that compiling, linking and/or using OpenSSL is allowed.
+
+	details: http://www.gnome.org/~markmc/openssl-and-the-gpl.html
+
+2006-07-26  jens m. noedler  <noedler@web.de>
+
+	wdfs, 1.3.0
+
+2006-07-26  jens m. noedler  <noedler@web.de>
+
+	implemented dummy wdfs_chmod() method
+
+2006-07-26  jens m. noedler  <noedler@web.de>
+
+	fixed some escape/unescape problems
+
+2006-07-26  jens m. noedler  <noedler@web.de>
+
+	fix: invalid read in remove_ending_slash()
+
+2006-07-25  jens m. noedler  <noedler@web.de>
+
+	simplified #definition of NEON_VERSION
+
+2006-07-25  jens m. noedler  <noedler@web.de>
+
+	- do not allow lock_timeout to be set to 0 seconds
+	- fixed a bug regarding too late unescaping of the remotepath,
+	  what may lead to recursive adding of the directory to itself.
+
+2006-07-25  jens m. noedler  <noedler@web.de>
+
+	memory management: replaced wdfs_free() through FREE() and free_chars()
+
+2006-07-25  jens m. noedler  <noedler@web.de>
+
+2006-07-24  jens m. noedler  <noedler@web.de>
+
+	wdfs is now compatible to neon 0.26, thanks again to suse
+
+2006-07-21  jens m. noedler  <noedler@web.de>
+
+	type updates and conversion of error_parameter_parsing from int to bool_t
+
+2006-07-21  jens m. noedler  <noedler@web.de>
+
+	correct indentation and fix for "the last parameter parsing bug" ;-)
+
+2006-07-20  jens m. noedler  <noedler@web.de>
+
+	typo updates
+
+2006-07-20  jens m. noedler  <noedler@web.de>
+
+	conversion from NE_FREE(...) to wdfs_free(...)
+
+2006-07-20  jens m. noedler  <noedler@web.de>
+
+	enhanced argument handling, also based on suse patches
+
+2006-07-20  jens m. noedler  <noedler@web.de>
+
+	reset arguments to avoid storing sensitive data in the process table
+	based on a patch from max@suse.de
+
+2006-07-20  jens m. noedler  <noedler@web.de>
+
+	fix for 64 bit platforms due to missing braces
+	patch from max@suse.de, thanks!
+
+2006-06-27  jens m. noedler  <noedler@web.de>
+
+	added a comment about freebsd compat in the README
+
+2006-06-27  jens m. noedler  <noedler@web.de>
+
+	wdfs, 1.2.1
+	just a build fix for freebsd
+
+2006-06-26  jens m. noedler  <noedler@web.de>
+
+	compile fix for freebsd
+
+2006-04-10  jens m. noedler  <noedler@web.de>
+
+	wdfs, 1.2.0
+	updated the README
+
+2006-04-10  jens m. noedler  <noedler@web.de>
+
+	finally fixed the last ftruncate() bug
+	thanks to miklos! :-)
+
+2006-04-06  jens m. noedler  <noedler@web.de>
+
+	ftruncate() done.
+	but there is still a bug with ftruncate() and O_APPEND
+
+2006-03-12  jens m. noedler  <noedler@web.de>
+
+	made redirect support configurable via parameter "-r"
+	("-r" is no longer used by fuse, I think since v2.5)
+
+2006-03-12  jens m. noedler  <noedler@web.de>
+
+	smoother redirect support using
+	static int handle_redirect(char **remotepath);
+
+2006-03-12  jens m. noedler  <noedler@web.de>
+
+	stub for wdfs_ftruncate
+
+2006-03-12  jens m. noedler  <noedler@web.de>
+
+	some changes for FUSE_USE_VERSION 25
+	and compat with fuse 2.3 and 2.4
+
+2006-03-11  jens m. noedler  <noedler@web.de>
+
+	first stage of redirect support
+	first steps to go to fuse interface v25
+
+2006-01-05  jens m. noedler  <noedler@web.de>
+
+	wdfs, 1.1.1
+	added some comments about the fixed bug
+
+2006-01-04  jens m. noedler  <noedler@web.de>
+
+	1.1.1-pre1
+
+2006-01-04  jens m. noedler  <noedler@web.de>
+
+	fixed a bug that appeared if a servers sends the complete URI not only the path
+	thanks to luke plant for reporting and supporting!
+
+2006-01-04  jens m. noedler  <noedler@web.de>
+
+	updated the year in the copyright statement
+
+2005-11-19  jens m. noedler  <noedler@web.de>
+
+	typo updates
+
+2005-11-08  jens m. noedler  <noedler@web.de>
+
+	added automatic ChangeLog generation
+
+2005-11-08  jens m. noedler  <noedler@web.de>
+
+	added version number conventions to README
+
+2005-11-08  jens m. noedler  <noedler@web.de>
+
+	wdfs, 1.1.0, 2nd checking ;)
+
+2005-11-08  jens m. noedler  <noedler@web.de>
+
+	wdfs, 1.1.0
+
+2005-11-08  jens m. noedler  <noedler@web.de>
+
+	-	x = argv[arg_number + 1];
+	-	arg_number++;
+	+	x = argv[++arg_number];
+
+2005-11-08  jens m. noedler  <noedler@web.de>
+
+	added neon cross compiling
+
+2005-11-05  jens m. noedler  <noedler@web.de>
+
+	1.1.0-pre2
+
+2005-11-05  jens m. noedler  <noedler@web.de>
+
+	typo only update
+
+2005-11-05  jens m. noedler  <noedler@web.de>
+
+	implemented parameter '-ac' (accept certificate)
+
+2005-11-05  jens m. noedler  <noedler@web.de>
+
+	choose gpl as license for wdfs and added gpl comments
+
+2005-11-03  jens m. noedler  <noedler@web.de>
+
+	commit
+
+2005-11-03  jens m. noedler  <noedler@web.de>
+
+	cleaned up verify_ssl_certificate()
+
+2005-11-03  jens m. noedler  <noedler@web.de>
+
+	fixed a bug when mounting non-webdav http resources
+
+2005-11-01  jens m. noedler  <noedler@web.de>
+
+	wdfs, 1.0.2-pre1: basic and buggy ssl support
+
+2005-10-28  jens m. noedler  <noedler@web.de>
+
+	README update
+
+2005-10-08  jens m. noedler  <noedler@web.de>
+
+	bugfix in svn.c (mounting a subdir of a repository and access old revisions works fine)
+
+2005-10-06  jens m. noedler  <noedler@web.de>
+
+	updated README
+
+2005-09-17  jens m. noedler  <noedler@web.de>
+
+	added files "jens-*"
+
+2005-09-16  jens m. noedler  <noedler@web.de>
+
+	renamed fuse01 to wdfs
+
+2005-09-13  jens m. noedler  <noedler@web.de>
+
+	wdfs, 1.0
+

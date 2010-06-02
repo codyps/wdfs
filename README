@@ -1,0 +1,129 @@
+
+abstract:
+  wdfs is a webdav filesystem with special features for accessing subversion
+  repositories. it is based on fuse v2.5+ and neon v0.24.7+.
+
+
+author of wdfs:
+  (c) 2005 - 2007 jens m. noedler, noedler@web.de
+
+
+license:
+  wdfs is distributed under the terms of the gnu general public license.
+  see file COPYING for details.
+
+
+home and svn repository of wdfs:
+  http://noedler.de/projekte/wdfs/
+  http[s]://svn.projectai.org/svn/projects_private/wdfs/
+
+
+features:
+ - generic webdav filesystem
+ - http redirect support
+ - https support
+ - file locking support (different modes)
+ - access to all revisions of a webdav exported subversion repository
+ - versioning filesystem for autoversioning enabled subversion repositories
+   (see section "wdfs, subversion and apache" in this document)
+
+
+dependencies:
+ - operating systems: linux (kernel 2.4 or 2.6), freebsd (6.x or 7.x), mac os x
+   hint for linux user: using a kernel 2.6.15 or later is recommended.
+ - fuse (filesystem in userspace) v2.5 or later (http://fuse.sourceforge.net/)
+ - neon webdav library v0.24.7 or later (http://www.webdav.org/neon/)
+
+
+installation:
+  $ tar xfz wdfs-1.x.x.tar.gz
+  $ cd wdfs-1.x.x
+  $ ./configure && make
+  $ su -c "make install"
+
+
+usage:
+  $ mkdir ~/mountpoint
+  $ wdfs http[s]://server[:port][/directory/] ~/mountpoint [options]
+  $ wdfs -h      # prints wdfs and fuse options
+
+
+mounting wdfs using fstab:
+  example entry for the /etc/fstab file:
+  wdfs#http://server  /mnt/wdfs  fuse  users,locking=simple  0  0
+
+  hint: due to a bug in fuse 2.6.3 and earlier it's not possible to add
+  the option "username=abc" to the option list. this will be fixed with 
+  later versions of fuse.
+
+
+wdfs, subversion and apache:
+  wdfs may be used to access subversion repositories that are exported as
+  webdav using the apache webserver. you need to load the required apache 
+  modules for webdav and for subversion and add a location directive like
+  the following.
+
+  <Location "/svn">
+    DAV svn
+    SVNPath /home/jens/repositories/wdfs
+    SVNAutoversioning on
+    AuthType None
+  </Location>
+
+
+version number conventions:
+ - the major number will never change.
+ - the minor number changes if new features are introduced or 
+   if parts of the api are changed.
+   warning: this may include backward-incompatible changes!
+ - the last number changes on bug fixes and little non-api changes.
+   e.g. v1.1.0 introduced new features from it's predecessor v1.0.1
+
+
+limitations of this implementation:
+ - wdfs is not (yet) multithread safe. it always uses fuse single thread mode.
+ - read/write of big files (~ 50 MB+) is slow, because the _complete_ file
+   will be GET/PUT on a request.
+ - svn mode: only up to 2^31-1 revisions can be accessed,
+   because "latest_revision" is an integer variable.
+ - svn mode: if a subdirectory of a subversion repository is mounted, the
+   "svn_basedir" shows the content of the repository root and not only the
+   content of the mounted subdir. [caused by svn_get_remotepath()]
+ - http redirect support:
+    * there is no redirect support for the mountpoint. please mount the new
+      location, that will be printed as an error message.
+    * the redirect support is limited to the webdav server, that is mounted.
+      redirects to another server are not supported.
+
+
+limitations of wdfs, caused by other limitations:
+ - wdfs supports only utf-8 encoded file and directory names for svn access.
+   use utf8 capable applications or pure ascii (no iso8859!) encoded names.
+   (limitation caused by subversion, which stores all data utf-8 encoded)
+ - wdfs does not support setting file attributes with utime() or utimes().
+   (e.g. used by "touch file -m -t 200601010000"). see wdfs_setattr() for
+   details. (limitation caused by webdav specification rfc 2518)
+
+
+source code conventions:
+ - variable name "remotepath" is used for WebDAV access (/remote/dir/file)
+ - variable name "localpath" is used for local access (/file)
+ - variable name "ret" is used for the return values of methods
+ - methods and structs starting with "ne_" are part of the neon library
+ - error output:
+    - "## " prefix for warnings and error messages
+ - debug output:
+    - ">> " prefix for fuse callback methods
+    - "** " prefix for cache related messages (no errors)
+    - "++ " prefix for locking related messages (no errors)
+ - the code is formated with tabs (tab width 4 characters)
+ - every line should not be longer than 80 characters
+
+
+acknowledgements:
+  helmut neukirchen for supervising my bachelor thesis and the development
+  of wdfs. miklos szeredi for developing fuse and being a great maintainer.
+  the members of the fuse-devel mailing list for helping me and everybody 
+  who is contributing to wdfs. thanks!
+
+
