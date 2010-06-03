@@ -204,6 +204,8 @@ int setup_webdav_session(
 	/* if no port was defined use the default port */
 	uri.port = uri.port ? uri.port : ne_uri_defaultport(uri.scheme);
 
+	ne_debug_init(stderr,0);
+
 	/* needed for ssl connections. it's not documented. nice to know... ;-) */
 	ne_sock_init();
 
@@ -241,6 +243,8 @@ int setup_webdav_session(
 		ne_uri_free(&uri);
 		return -1;
 	}
+
+	ne_set_useragent(session,"wdfs");
 
 	/* try to access the server */
 	ne_server_capabilities capabilities;
