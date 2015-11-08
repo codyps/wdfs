@@ -1,0 +1,160 @@
+webdav.o: webdav.c /usr/include/stdio.h /usr/include/sys/cdefs.h \
+  /usr/include/sys/_null.h /usr/include/sys/_types.h \
+  /usr/include/machine/_types.h /usr/include/x86/_types.h \
+  /usr/include/string.h /usr/include/strings.h \
+  /usr/include/xlocale/_strings.h /usr/include/xlocale/_string.h \
+  /usr/include/stdlib.h /usr/include/unistd.h /usr/include/sys/types.h \
+  /usr/include/machine/endian.h /usr/include/x86/endian.h \
+  /usr/include/sys/_pthreadtypes.h /usr/include/sys/_stdint.h \
+  /usr/include/sys/select.h /usr/include/sys/_sigset.h \
+  /usr/include/sys/_timeval.h /usr/include/sys/timespec.h \
+  /usr/include/sys/_timespec.h /usr/include/sys/unistd.h \
+  /usr/include/assert.h /usr/include/termios.h \
+  /usr/include/sys/_termios.h /usr/include/sys/ttycom.h \
+  /usr/include/sys/ioccom.h /usr/include/sys/ttydefaults.h \
+  /usr/local/include/neon/ne_basic.h \
+  /usr/local/include/neon/ne_request.h \
+  /usr/local/include/neon/ne_utils.h /usr/include/stdarg.h \
+  /usr/include/x86/stdarg.h /usr/local/include/neon/ne_defs.h \
+  /usr/local/include/neon/ne_string.h /usr/local/include/neon/ne_alloc.h \
+  /usr/local/include/neon/ne_session.h /usr/local/include/neon/ne_ssl.h \
+  /usr/local/include/neon/ne_uri.h /usr/local/include/neon/ne_socket.h \
+  /usr/local/include/neon/ne_auth.h /usr/local/include/neon/ne_locks.h \
+  /usr/local/include/neon/ne_redirect.h wdfs-main.h config.h \
+  /usr/local/include/fuse/fuse.h /usr/local/include/fuse/fuse_common.h \
+  /usr/local/include/fuse/fuse_opt.h /usr/include/stdint.h \
+  /usr/include/machine/_stdint.h /usr/include/x86/_stdint.h \
+  /usr/local/include/fuse/fuse_common_compat.h /usr/include/fcntl.h \
+  /usr/include/time.h /usr/include/xlocale/_time.h /usr/include/utime.h \
+  /usr/include/sys/stat.h /usr/include/sys/time.h \
+  /usr/include/sys/statvfs.h /usr/include/sys/uio.h \
+  /usr/include/sys/_iovec.h /usr/local/include/fuse/fuse_compat.h \
+  webdav.h
+
+/usr/include/stdio.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/sys/_null.h:
+
+/usr/include/sys/_types.h:
+
+/usr/include/machine/_types.h:
+
+/usr/include/x86/_types.h:
+
+/usr/include/string.h:
+
+/usr/include/strings.h:
+
+/usr/include/xlocale/_strings.h:
+
+/usr/include/xlocale/_string.h:
+
+/usr/include/stdlib.h:
+
+/usr/include/unistd.h:
+
+/usr/include/sys/types.h:
+
+/usr/include/machine/endian.h:
+
+/usr/include/x86/endian.h:
+
+/usr/include/sys/_pthreadtypes.h:
+
+/usr/include/sys/_stdint.h:
+
+/usr/include/sys/select.h:
+
+/usr/include/sys/_sigset.h:
+
+/usr/include/sys/_timeval.h:
+
+/usr/include/sys/timespec.h:
+
+/usr/include/sys/_timespec.h:
+
+/usr/include/sys/unistd.h:
+
+/usr/include/assert.h:
+
+/usr/include/termios.h:
+
+/usr/include/sys/_termios.h:
+
+/usr/include/sys/ttycom.h:
+
+/usr/include/sys/ioccom.h:
+
+/usr/include/sys/ttydefaults.h:
+
+/usr/local/include/neon/ne_basic.h:
+
+/usr/local/include/neon/ne_request.h:
+
+/usr/local/include/neon/ne_utils.h:
+
+/usr/include/stdarg.h:
+
+/usr/include/x86/stdarg.h:
+
+/usr/local/include/neon/ne_defs.h:
+
+/usr/local/include/neon/ne_string.h:
+
+/usr/local/include/neon/ne_alloc.h:
+
+/usr/local/include/neon/ne_session.h:
+
+/usr/local/include/neon/ne_ssl.h:
+
+/usr/local/include/neon/ne_uri.h:
+
+/usr/local/include/neon/ne_socket.h:
+
+/usr/local/include/neon/ne_auth.h:
+
+/usr/local/include/neon/ne_locks.h:
+
+/usr/local/include/neon/ne_redirect.h:
+
+wdfs-main.h:
+
+config.h:
+
+/usr/local/include/fuse/fuse.h:
+
+/usr/local/include/fuse/fuse_common.h:
+
+/usr/local/include/fuse/fuse_opt.h:
+
+/usr/include/stdint.h:
+
+/usr/include/machine/_stdint.h:
+
+/usr/include/x86/_stdint.h:
+
+/usr/local/include/fuse/fuse_common_compat.h:
+
+/usr/include/fcntl.h:
+
+/usr/include/time.h:
+
+/usr/include/xlocale/_time.h:
+
+/usr/include/utime.h:
+
+/usr/include/sys/stat.h:
+
+/usr/include/sys/time.h:
+
+/usr/include/sys/statvfs.h:
+
+/usr/include/sys/uio.h:
+
+/usr/include/sys/_iovec.h:
+
+/usr/local/include/fuse/fuse_compat.h:
+
+webdav.h:
