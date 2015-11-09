@@ -57,6 +57,8 @@
 
 static void print_help();
 static int call_fuse_main(struct fuse_args *args);
+
+/* waitman - define these two for use in wdfs_create() */
 static int wdfs_mknod(const char *localpath, mode_t mode, dev_t rdev);
 static int wdfs_open(const char *localpath, struct fuse_file_info *fi);
 
@@ -1276,7 +1278,7 @@ static void wdfs_destroy()
 
 
 static struct fuse_operations wdfs_operations = {
-	.create		= wdfs_create,
+	.create		= wdfs_create, /* added by waitman */
 	.getattr	= wdfs_getattr,
 	.readdir	= wdfs_readdir,
 	.open		= wdfs_open,
