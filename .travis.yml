@@ -1,0 +1,6 @@
+script: ./configure && make
+language: c
+compiler: 
+  - clang
+  - gcc
+
