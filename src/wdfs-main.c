@@ -58,6 +58,11 @@
 static void print_help();
 static int call_fuse_main(struct fuse_args *args);
 
+/* waitman - define these two for use in wdfs_create() */
+static int wdfs_mknod(const char *localpath, mode_t mode, dev_t rdev);
+static int wdfs_open(const char *localpath, struct fuse_file_info *fi);
+
+
 /* define package name and version if config.h is not available. */
 #ifndef HAVE_CONFIG_H
 	#define PACKAGE_NAME 	"wdfs"
@@ -526,6 +531,7 @@ static int wdfs_getattr(const char *localpath, struct stat *stat)
 	if (remotepath == NULL)
 		return -ENOMEM;
 
+
 	/* stat not found in the cache? perform a propfind to get stat! */
 	if (cache_get_item(stat, remotepath)) {
 		int ret = ne_simple_propfind(
@@ -539,9 +545,11 @@ static int wdfs_getattr(const char *localpath, struct stat *stat)
 				session, remotepath, NE_DEPTH_ZERO, properties_fileattr,
 				wdfs_getattr_propfind_callback, stat);
 		}
+
 		if (ret != NE_OK) {
 			fprintf(stderr, "## PROPFIND error in %s(): %s\n",
 				__func__, ne_get_error(session));
+
 			FREE(remotepath);
 			return -ENOENT;
 		}
@@ -782,6 +790,7 @@ static int wdfs_write(
 	const char *localpath, const char *buf, size_t size,
 	off_t offset, struct fuse_file_info *fi)
 {
+
 	if (wdfs.debug == true)
 		print_debug_infos(__func__, localpath);
 
@@ -1008,6 +1017,25 @@ static int wdfs_ftruncate(
 }
 
 
+/* author waitman, 08.11.2015 implement create for fuse */
+static int wdfs_create(const char *localpath, mode_t mode, struct fuse_file_info *fi)
+{
+
+	int ret;
+	dev_t rdev;
+	rdev = (dev_t)0;
+
+	ret = wdfs_mknod(localpath,mode,rdev);
+	if (ret!=0)
+	{
+		return ret;
+	}
+	ret = wdfs_open(localpath, fi);
+	return ret;
+
+}
+
+
 /* author jens, 28.07.2005 18:15:12, location: noedlers garden in trubenhausen
  * this method creates a empty file using the webdav method put. */
 static int wdfs_mknod(const char *localpath, mode_t mode, dev_t rdev)
@@ -1017,13 +1045,18 @@ static int wdfs_mknod(const char *localpath, mode_t mode, dev_t rdev)
 
 	assert(localpath);
 
+
 	/* data below svn_basedir is read-only */
 	if (wdfs.svn_mode == true && g_str_has_prefix(localpath, svn_basedir))
 		return -EROFS;
 
+
+
 	char *remotepath = get_remotepath(localpath);
 	if (remotepath == NULL)
 		return -ENOMEM;
+
+
 
 	int fh = get_filehandle();
 	if (fh == -1) {
@@ -1031,12 +1064,15 @@ static int wdfs_mknod(const char *localpath, mode_t mode, dev_t rdev)
 		return -EIO;
 	}
 
+
+
 	if (ne_put(session, remotepath, fh)) {
 		fprintf(stderr, "## PUT error: %s\n", ne_get_error(session));
 		close(fh);
 		FREE(remotepath);
 		return -EIO;
 	}
+
 
 	close(fh);
 	FREE(remotepath);
@@ -1242,6 +1278,7 @@ static void wdfs_destroy()
 
 
 static struct fuse_operations wdfs_operations = {
+	.create		= wdfs_create, /* added by waitman */
 	.getattr	= wdfs_getattr,
 	.readdir	= wdfs_readdir,
 	.open		= wdfs_open,

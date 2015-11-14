@@ -1,0 +1,8 @@
+*.log
+.deps
+src/.deps/
+Makefile
+src/Makefile
+*.status
+src/config.h
+src/stamp-h1

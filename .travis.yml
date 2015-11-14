@@ -1,0 +1,9 @@
+before_script:
+  - sudo apt-get install libfuse-dev -y
+  - sudo apt-get install libneon27-dev -y
+script: ./configure && make
+language: c
+compiler: 
+  - clang
+  - gcc
+
